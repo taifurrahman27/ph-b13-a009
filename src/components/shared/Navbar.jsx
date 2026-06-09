@@ -25,7 +25,6 @@ const Navbar = () => {
     ];
 
     const privateNavItems = [
-
         {
             path: "/",
             text: "Home",
@@ -48,58 +47,85 @@ const Navbar = () => {
         },
     ];
 
+    const navItems = user ? privateNavItems : publicNavItems;
 
     return (
-        <nav className="shadow-xl bg-slate-100 sticky top-0 z-50">
+        <nav className="sticky top-0 z-50 bg-slate-100 shadow-xl backdrop-blur">
             <div className="container mx-auto px-4">
 
-                <div className="flex justify-between items-center py-2">
+                <div className="flex items-center justify-between py-2">
 
-                    <Link href="/">
+                    <Link href="/" className="flex items-center gap-3">
                         <Image
                             src="/assets/logo.png"
                             alt="StudyNook Logo"
-                            height={60}
-                            width={60}
-                            className="cursor-pointer rounded-full p-1 bg-[#2415f46b]"
+                            height={50}
+                            width={50}
+                            className="bg-[#2415f46b] p-1"
                         />
+
+                        <div className="hidden sm:block">
+                            <h2 className="text-2xl font-extrabold tracking-tight">
+                                <span className="text-indigo-600">Study</span>
+                                <span className="text-blue-500">
+                                    Nook
+                                </span>
+                            </h2>
+                        </div>
                     </Link>
 
-                    {
-                        user == true ? (<ul className="hidden md:flex items-center gap-3">
-                            {privateNavItems.map((item, index) => (
-                                <MyNavLink key={index} href={item.path}>
-                                    {item.text}
-                                </MyNavLink>
-                            ))}
-                        </ul>) : (<ul className="hidden md:flex items-center gap-3">
-                            {publicNavItems.map((item, index) => (
-                                <MyNavLink key={index} href={item.path}>
-                                    {item.text}
-                                </MyNavLink>
-                            ))}
-                        </ul>)
-                    }
+                    <ul className="hidden lg:flex items-center gap-2 xl:gap-4">
+                        {navItems.map((item, index) => (
+                            <MyNavLink key={index} href={item.path}>
+                                {item.text}
+                            </MyNavLink>
+                        ))}
+                    </ul>
 
-                    <div className="hidden md:flex items-center gap-3">
-                        <Link href="/login">
-                            <Button className="w-full rounded-none bg-[#2415f4d0]">
-                                <ArrowRightToSquare />
-                                Login
-                            </Button>
-                        </Link>
+                    <div className="hidden lg:flex items-center gap-3">
 
-                        <Link href="/signup">
-                            <Button variant="secondary" className="w-full rounded-none bg-[#5b50f029]">
-                                <PersonPencil />
-                                Sign Up
-                            </Button>
-                        </Link>
+                        {!user ? (
+                            <>
+                                <Link href="/login">
+                                    <Button className="rounded-none bg-[#2415f4d0]">
+                                        <ArrowRightToSquare />
+                                        Login
+                                    </Button>
+                                </Link>
+
+                                <Link href="/signup">
+                                    <Button
+                                        variant="secondary"
+                                        className="rounded-none bg-[#5b50f029]"
+                                    >
+                                        <PersonPencil />
+                                        Sign Up
+                                    </Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <Link href="/profile">
+                                <Button className="rounded-none bg-[#2415f4d0]">
+                                    Profile
+                                </Button>
+                            </Link>
+                        )}
+
+                    </div>
+
+                    <div className="sm:hidden">
+                        <h2 className="text-xl font-extrabold tracking-tight">
+                            <span className="text-indigo-600">Study</span>
+                            <span className="text-blue-500">
+                                Nook
+                            </span>
+                        </h2>
                     </div>
 
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="md:hidden p-2 rounded-md hover:bg-gray-200 transition"
+                        className="lg:hidden rounded-md p-2 transition hover:bg-gray-200"
+                        aria-label="Toggle Menu"
                     >
                         {isOpen ? (
                             <HiX className="text-3xl" />
@@ -107,51 +133,70 @@ const Navbar = () => {
                             <HiOutlineMenuAlt3 className="text-3xl" />
                         )}
                     </button>
+
                 </div>
 
-                {isOpen && (
-                    <div className="md:hidden pb-4">
+                <div
+                    className={`overflow-hidden transition-all duration-300 lg:hidden ${isOpen
+                        ? "max-h-150 pb-4"
+                        : "max-h-0"
+                        }`}
+                >
 
-                        <ul className="flex flex-col gap-2">
+                    <ul className="flex flex-col gap-2 border-t pt-4">
 
-                            {navItems.map((item, index) => (
-                                <li key={index}>
-                                    <MyNavLink href={item.path}>
-                                        {item.text}
-                                    </MyNavLink>
-                                </li>
-                            ))}
-
-                        </ul>
-
-                        <div className="flex flex-col gap-3 mt-4">
-
-                            <Link
-                                href="/login"
+                        {navItems.map((item, index) => (
+                            <li
+                                key={index}
                                 onClick={() => setIsOpen(false)}
                             >
-                                <Button className="w-full rounded-none bg-[#2415f4d0]">
-                                    <ArrowRightToSquare />
-                                    Login
-                                </Button>
-                            </Link>
+                                <MyNavLink href={item.path}>
+                                    {item.text}
+                                </MyNavLink>
+                            </li>
+                        ))}
 
-                            <Link
-                                href="/signup"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                <Button
-                                    variant="secondary"
-                                    className="w-full rounded-none bg-[#5b50f029]"
+                    </ul>
+
+                    <div className="mt-5 flex flex-col gap-3">
+
+                        {!user ? (
+                            <>
+                                <Link
+                                    href="/login"
+                                    onClick={() => setIsOpen(false)}
                                 >
-                                    <PersonPencil />
-                                    Sign Up
+                                    <Button className="w-full rounded-none bg-[#2415f4d0]">
+                                        <ArrowRightToSquare />
+                                        Login
+                                    </Button>
+                                </Link>
+
+                                <Link
+                                    href="/signup"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    <Button
+                                        variant="secondary"
+                                        className="w-full rounded-none bg-[#5b50f029]"
+                                    >
+                                        <PersonPencil />
+                                        Sign Up
+                                    </Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <Link href="/profile">
+                                <Button className="rounded-none bg-[#2415f4d0]">
+                                    Profile
                                 </Button>
                             </Link>
+                        )}
 
-                        </div>
                     </div>
-                )}
+
+                </div>
+
             </div>
         </nav>
     );
