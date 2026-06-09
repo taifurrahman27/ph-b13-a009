@@ -11,7 +11,7 @@ import { Button, Input } from "@heroui/react";
 
 const Footer = () => {
     return (
-        <footer className="bg-slate-900 text-slate-300 mt-20">
+        <footer className="bg-slate-900 text-slate-300">
             <div className="container mx-auto px-4 py-10">
 
                 <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
