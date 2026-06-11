@@ -11,6 +11,7 @@ import {
     Checkbox,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const amenitiesOptions = [
     { label: "Whiteboard", icon: "📝" },
@@ -40,6 +41,35 @@ const AddRoomForm = () => {
         };
 
         console.log(room);
+
+        try {
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`,
+                {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    body: JSON.stringify(room),
+                }
+            );
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(
+                    data?.message || "Failed to add room"
+                );
+            }
+
+            toast.success(
+                data.message || "Room added successfully!"
+            );
+            router.push("/my-listings");
+
+        } catch (error) {
+            toast.error(error.message);
+        }
 
     };
 
