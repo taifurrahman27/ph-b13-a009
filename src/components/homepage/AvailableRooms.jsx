@@ -1,5 +1,6 @@
 import React from "react";
 import RoomCard from "../RoomCard";
+import RoomsGridSkeleton from "../skeletens/RoomsGridSkeleton";
 
 const AvailableRooms = async () => {
     const res = await fetch(
@@ -10,6 +11,10 @@ const AvailableRooms = async () => {
     );
 
     const rooms = await res.json();
+
+    if (!rooms) {
+        return <RoomsGridSkeleton count={6} />;
+    }
 
     return (
         <section className="container mx-auto px-4 py-16">
