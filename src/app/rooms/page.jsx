@@ -5,7 +5,6 @@ const AllRoomsPage = async () => {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`)
     const rooms = await res.json();
-    console.log(rooms, 'rooms from db');
 
 
     return (
@@ -16,14 +15,33 @@ const AllRoomsPage = async () => {
             </div>
 
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {rooms.map((room) => (
-                    <RoomCard
-                        key={room._id}
-                        room={room}
-                    />
-                ))}
-            </div>
+            {rooms.length === 0 ? (
+                <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 py-20 text-center">
+                    <div className="mx-auto max-w-md">
+                        <div className="mb-4 text-6xl">
+                            📚
+                        </div>
+
+                        <h2 className="text-2xl font-bold text-slate-800">
+                            No rooms found
+                        </h2>
+
+                        <p className="mt-3 text-slate-500">
+                            There are currently no study rooms
+                            available. Please check back later.
+                        </p>
+                    </div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {rooms.map((room) => (
+                        <RoomCard
+                            key={room._id}
+                            room={room}
+                        />
+                    ))}
+                </div>
+            )}
 
         </div>
     );
