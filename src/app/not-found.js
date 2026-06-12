@@ -3,18 +3,18 @@ import { Home, BookOpen, TriangleAlert } from "lucide-react";
 
 const NotFoundPage = () => {
     return (
-        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-indigo-50 via-white to-blue-50 px-6">
+        <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-indigo-100 via-white to-blue-100 px-6">
 
             <div className="absolute -top-32 -left-32 h-80 w-80 rounded-full bg-indigo-300/20 blur-3xl" />
             <div className="absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-blue-300/20 blur-3xl" />
 
             <div className="relative w-full max-w-2xl rounded-[2rem] border border-white/50 bg-white/80 p-10 text-center shadow-2xl backdrop-blur-xl md:p-14">
 
-                <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-indigo-100">
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-indigo-100">
                     <TriangleAlert className="h-12 w-12 text-indigo-600" />
                 </div>
 
-                <h1 className="bg-linear-to-r from-indigo-600 to-blue-400  bg-clip-text text-7xl font-extrabold text-transparent md:text-9xl">
+                <h1 className="bg-linear-to-r from-indigo-600 to-blue-400  bg-clip-text text-6xl font-extrabold text-transparent md:text-8xl">
                     404
                 </h1>
 
@@ -27,18 +27,6 @@ const NotFoundPage = () => {
                     removed, or perhaps never existed. Let&apos;s help you find your
                     way back to the perfect study space.
                 </p>
-
-                <div className="mt-8 rounded-2xl border border-indigo-100 bg-indigo-50 p-5 text-left">
-                    <h3 className="font-semibold text-slate-800">
-                        You can try:
-                    </h3>
-
-                    <ul className="mt-3 space-y-2 text-sm text-slate-600">
-                        <li>• Checking the URL for typing mistakes</li>
-                        <li>• Browsing all available study rooms</li>
-                        <li>• Returning to the homepage</li>
-                    </ul>
-                </div>
 
                 <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
 

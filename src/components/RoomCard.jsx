@@ -15,7 +15,7 @@ const RoomCard = ({ room }) => {
         image,
         description,
         floor,
-        capacity,
+        seatCapacity,
         hourlyRate,
         amenities = [],
     } = room;
@@ -68,7 +68,7 @@ const RoomCard = ({ room }) => {
                         <div className="flex items-center gap-2 text-sm text-slate-600">
                             <Persons className="text-indigo-600" />
                             <span>
-                                {capacity} People
+                                {seatCapacity} People
                             </span>
                         </div>
 
