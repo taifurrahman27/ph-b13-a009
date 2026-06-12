@@ -1,3 +1,4 @@
+import BookingSection from "@/components/BookingSection";
 import Image from "next/image";
 
 const RoomDetailsPage = async ({ params }) => {
@@ -90,6 +91,7 @@ const RoomDetailsPage = async ({ params }) => {
 
                     </div>
 
+                    <BookingSection room={room} />
 
                 </div>
 
