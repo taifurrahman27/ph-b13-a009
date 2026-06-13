@@ -67,7 +67,7 @@ const BookingModal = ({ room }) => {
                 className="bg-indigo-600 text-white hover:bg-indigo-700"
                 onPress={() => setIsOpen(true)}
             >
-                Book Now
+                Book This Room
             </Button>
 
             {isOpen && (

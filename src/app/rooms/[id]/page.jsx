@@ -1,4 +1,6 @@
 import BookingSection from "@/components/BookingSection";
+import { DeleteRoomModal } from "@/components/DeleteRoomModal";
+import { EditRoomModal } from "@/components/EditRoomModal";
 import Image from "next/image";
 
 const RoomDetailsPage = async ({ params }) => {
@@ -28,10 +30,15 @@ const RoomDetailsPage = async ({ params }) => {
     return (
         <section className="container mx-auto px-4 py-10">
 
+            <div className="flex items-center justify-end gap-2 border-b pt-4 my-4">
+
+                <DeleteRoomModal room={room}></DeleteRoomModal>
+            </div>
+
             <div className="grid gap-10 lg:grid-cols-2">
 
-
                 <div>
+
                     <Image
                         src={image}
                         alt={roomName}
