@@ -11,7 +11,7 @@ import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const user = true;
+    const user = false;
 
     const publicNavItems = [
         {
