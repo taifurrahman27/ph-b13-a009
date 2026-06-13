@@ -16,27 +16,30 @@ export function DeleteRoomModal({ room }) {
 
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_URL}/rooms/${room?._id}`,
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${room._id}`,
                 {
                     method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ _id: room._id }),
                 }
             );
 
             const data = await res.json();
 
-            if (data.success) {
-                toast.success("Room deleted successfully!");
-                router.push("/rooms");
-            } else {
-                toast.error(data.message || "Failed to delete room");
+            if (!res.ok) {
+                throw new Error(
+                    data.message || "Failed to delete room"
+                );
             }
+
+            toast.success("Room deleted successfully!");
+
+            router.push("/rooms");
+            router.refresh();
         } catch (error) {
             console.error("Delete room error:", error);
-            toast.error("Something went wrong");
+
+            toast.error(
+                error.message || "Something went wrong"
+            );
         } finally {
             setIsDeleting(false);
         }
