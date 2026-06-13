@@ -152,8 +152,8 @@ const SignUpPage = () => {
                         <div className="w-full max-w-md">
 
                             <div className="mb-8 text-center">
-                                <div className="mx-auto flex h-14 w-14 items-center justify-center bg-blue-50">
-                                    <FiBookOpen className="text-2xl text-blue-600" />
+                                <div className="mx-auto rounded-full flex h-16 w-16 items-center justify-center bg-blue-50">
+                                    <FiBookOpen className="text-2xl  text-blue-600" />
                                 </div>
                                 <span className="mt-4 text-4xl inline-block bg-indigo-50 px-4 py-1 font-bold text-indigo-700">
                                     Join StudyNook

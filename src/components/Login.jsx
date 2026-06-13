@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { FiLoader } from "react-icons/fi";
+import { FiLoader, FiLogIn } from "react-icons/fi";
 
 import { authClient } from "@/lib/auth-client";
 
-const SignUp = () => {
+const Login = () => {
     const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -19,33 +19,29 @@ const SignUp = () => {
 
         const formData = new FormData(e.currentTarget);
 
-        const name = formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
-        const imageUrl = formData.get("imageUrl");
 
         setIsLoading(true);
 
         try {
-            const { data, error } = await authClient.signUp.email({
-                name,
+            const { data, error } = await authClient.signIn.email({
                 email,
                 password,
-                imageUrl
             });
+
             console.log(data, error);
-            const user = data?.user;
-            console.log(user, "created user");
 
             if (error) {
                 toast.error(error.message);
                 return;
             }
 
-            toast.success("Account created successfully!");
+            toast.success("Welcome back to StudyNook!");
 
             router.push("/");
             router.refresh();
+
         } catch (error) {
             console.error(error);
             toast.error("Something went wrong");
@@ -54,7 +50,8 @@ const SignUp = () => {
         }
     };
 
-    const handleGoogleSignUp = async () => {
+
+    const handleGoogleLogin = async () => {
         setGoogleLoading(true);
 
         try {
@@ -64,7 +61,8 @@ const SignUp = () => {
             });
         } catch (error) {
             console.error(error);
-            toast.error("Google sign up failed");
+
+            toast.error("Google login failed");
             setGoogleLoading(false);
         }
     };
@@ -73,34 +71,18 @@ const SignUp = () => {
     return (
         <div className="w-full border border-slate-200 bg-white p-6 shadow-xl">
 
-            <div className="mb-6 text-center">
+            <div className="mb-5 text-center">
 
                 <h2 className="text-3xl font-black text-slate-900">
-                    Create Your Account
+                    Login Your Account
                 </h2>
 
-                <p className="mt-2 text-slate-500">
-                    Join StudyNook and book your perfect study space.
-                </p>
             </div>
 
             <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
             >
-                <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-700">
-                        Full Name
-                    </label>
-
-                    <input
-                        name="name"
-                        type="text"
-                        required
-                        placeholder="John Doe"
-                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500"
-                    />
-                </div>
 
                 <div>
                     <label className="mb-2 block text-sm font-semibold text-slate-700">
@@ -112,21 +94,7 @@ const SignUp = () => {
                         type="email"
                         required
                         placeholder="you@example.com"
-                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500"
-                    />
-                </div>
-
-                <div>
-                    <label className="mb-2 block text-sm font-semibold text-slate-700">
-                        Image URL
-                    </label>
-
-                    <input
-                        name="imageUrl"
-                        type="text"
-                        required
-                        placeholder="https://example.com/image.jpg"
-                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500"
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
                     />
                 </div>
 
@@ -139,12 +107,19 @@ const SignUp = () => {
                         name="password"
                         type="password"
                         required
-                        minLength={6}
                         placeholder="••••••••"
-                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500"
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
                     />
                 </div>
 
+                <div className="flex items-center justify-end">
+                    <button
+                        type="button"
+                        className="text-sm font-medium text-indigo-600 transition hover:text-indigo-700 hover:underline"
+                    >
+                        Forgot Password?
+                    </button>
+                </div>
 
                 <button
                     type="submit"
@@ -154,15 +129,20 @@ const SignUp = () => {
                     {isLoading ? (
                         <>
                             <FiLoader className="animate-spin" />
-                            Creating Account...
+                            Signing In...
                         </>
                     ) : (
-                        "Create Account"
+                        <>
+                            <FiLogIn />
+                            Sign In
+                        </>
                     )}
                 </button>
+
             </form>
 
             <div className="my-6 flex items-center">
+
                 <div className="h-px flex-1 bg-slate-200" />
 
                 <span className="px-4 text-sm text-slate-400">
@@ -170,10 +150,11 @@ const SignUp = () => {
                 </span>
 
                 <div className="h-px flex-1 bg-slate-200" />
+
             </div>
 
             <button
-                onClick={handleGoogleSignUp}
+                onClick={handleGoogleLogin}
                 disabled={googleLoading}
                 className="flex w-full items-center justify-center gap-3 rounded-2xl border border-slate-300 bg-white px-4 py-3 font-semibold text-slate-700 transition hover:bg-slate-50 disabled:opacity-70"
             >
@@ -189,8 +170,9 @@ const SignUp = () => {
                     </>
                 )}
             </button>
+
         </div>
     );
 };
 
-export default SignUp;
+export default Login;
