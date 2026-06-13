@@ -1,7 +1,8 @@
 import BookingSection from "@/components/BookingSection";
 import { DeleteRoomModal } from "@/components/DeleteRoomModal";
-import { EditRoomModal } from "@/components/EditRoomModal";
 import Image from "next/image";
+import Link from "next/link";
+import { BiEdit } from "react-icons/bi";
 
 const RoomDetailsPage = async ({ params }) => {
     const { id } = await params;
@@ -16,7 +17,6 @@ const RoomDetailsPage = async ({ params }) => {
     const room = await res.json();
 
     const {
-        _id,
         roomName,
         image,
         description,
@@ -33,6 +33,12 @@ const RoomDetailsPage = async ({ params }) => {
             <div className="flex items-center justify-end gap-2 border-b pt-4 my-4">
 
                 <DeleteRoomModal room={room}></DeleteRoomModal>
+                <Link
+                    href={`/rooms/${room._id}/edit`}
+                    className="inline-flex font-bold px-5 py-2 shadow-md items-center gap-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition"
+                ><BiEdit />
+                    Edit
+                </Link>
             </div>
 
             <div className="grid gap-10 lg:grid-cols-2">
