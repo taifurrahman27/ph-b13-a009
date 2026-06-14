@@ -19,19 +19,14 @@ const SignUp = () => {
 
         const formData = new FormData(e.currentTarget);
 
-        const name = formData.get("name");
-        const email = formData.get("email");
-        const password = formData.get("password");
-        const imageUrl = formData.get("imageUrl");
-
         setIsLoading(true);
 
         try {
             const { data, error } = await authClient.signUp.email({
-                name,
-                email,
-                password,
-                imageUrl
+                name: formData.get("name"),
+                email: formData.get("email"),
+                password: formData.get("password"),
+                image: formData.get("imageUrl"),
             });
             console.log(data, error);
             const user = data?.user;

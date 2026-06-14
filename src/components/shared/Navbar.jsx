@@ -31,13 +31,12 @@ import toast from "react-hot-toast";
 import MyNavLink from "./MyNavLink";
 import { authClient } from "@/lib/auth-client";
 
+
 const Navbar = () => {
     const router = useRouter();
-
     const { data: session } = authClient.useSession();
-
     const user = session?.user;
-
+    console.log(user, "Current User");
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const publicNavItems = [
@@ -138,15 +137,20 @@ const Navbar = () => {
                                     className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 transition hover:bg-slate-50"
                                 >
                                     <Image
-                                        src={user.image || `https://ui-avatars.com/api/?name=${user.name ?? "User Name"}`}
-                                        alt={user.name || "User Name"}
+                                        src={
+                                            user?.image ||
+                                            `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                                user?.name || "User"
+                                            )}`
+                                        }
+                                        alt={user?.name || "User Name"}
                                         width={40}
                                         height={40}
                                         className="rounded-full object-cover"
                                     />
                                     <div className="hidden xl:flex flex-col items-start">
-                                        <span className="font-semibold text-slate-800">{user.name}</span>
-                                        <span className="max-w-37.5 truncate text-xs text-slate-500">{user.email}</span>
+                                        <span className="font-semibold text-slate-800">{user?.name}</span>
+                                        <span className="max-w-37.5 truncate text-xs text-slate-500">{user?.email}</span>
                                     </div>
                                     <ChevronDown className="h-4 w-4 text-slate-500" />
                                 </button>

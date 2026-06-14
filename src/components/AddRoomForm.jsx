@@ -35,7 +35,7 @@ const AddRoomForm = () => {
             description: formData.get("description"),
             image: formData.get("image"),
             floor: formData.get("floor"),
-            capacity: Number(formData.get("capacity")),
+            seatCapacity: Number(formData.get("seatCapacity")),
             hourlyRate: Number(formData.get("hourlyRate")),
             amenities: formData.getAll("amenities"),
         };
@@ -132,11 +132,11 @@ const AddRoomForm = () => {
                         </TextField>
 
                         <TextField
-                            name="capacity"
+                            name="seatCapacity"
                             type="number"
                             isRequired
                         >
-                            <Label>Capacity</Label>
+                            <Label>Seat Capacity</Label>
 
                             <Input
                                 type="number"
