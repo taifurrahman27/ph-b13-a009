@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+📘 StudyNook by TR TECH
 
-## Getting Started
+StudyNook is a modern study room booking and listing platform that allows students to discover, book, and manage study rooms with real-time availability and conflict-free scheduling.
 
-First, run the development server:
+🔗 Live Site: ............
 
-```bash
+✨ Features
+📚 Browse and explore available study rooms with detailed information
+📅 Book study rooms with real-time date and time selection
+⛔ Prevent double booking with smart conflict detection system
+💰 Automatic booking cost calculation based on hourly rate
+👤 User authentication and personalized booking history
+🏢 Admin/room management system to add, update, and delete rooms
+📊 Real-time booking summary with instant feedback
+🧠 Smart validation for time slots and booking rules
+🎨 Clean, responsive UI built for students
+⚡ Fast and scalable full-stack architecture
+
+
+🛠️ Tech Stack
+
+Frontend
+Next.js (App Router)
+React.js
+Tailwind CSS
+HeroUI
+React Hot Toast
+
+Backend
+
+Node.js
+Express.js
+MongoDB
+MongoDB Native Driver
+Authentication
+BetterAuth / authClient (session-based auth)
+
+
+📦 Project Structure
+StudyNook/
+ ├── client (Next.js frontend)
+ ├── server (Express backend)
+ ├── components
+ ├── pages / app
+ ├── api (bookings, rooms)
+ └── database (MongoDB collections)
+
+
+🚀 Core Functionalities
+🏠 Room listing with dynamic data from MongoDB
+📝 Room CRUD operations (Create, Read, Update, Delete)
+
+📆 Booking system with:
+Date validation (no past booking)
+Hourly time slots (08:00–20:00)
+Conflict detection logic
+
+💳 Automatic price calculation per booking
+🔒 User-based booking tracking
+📊 Booking history page (“My Bookings”)
+⚙️ Installation & Setup
+1. Clone repository
+git clone ....................................
+2. Install dependencies
+Frontend
+cd client
+npm install
+Backend
+cd server
+npm install
+3. Setup environment variables
+Create .env file in backend:
+MONGODB_URI=your_mongodb_connection_string
+PORT=5000
+4. Run project
+Backend
+node index.js
+Frontend
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+📌 Future Improvements
+📅 Calendar-based booking UI (fully interactive)
+💳 Payment integration system
+📍 Location-based room discovery
+📱 Mobile app version
+🧠 AI-based room suggestion system
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+🏢 Project Owner
 
-To learn more about Next.js, take a look at the following resources:
+TR TECH
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+❤️ Acknowledgements
 
-## Deploy on Vercel
+Built as a full-stack learning and real-world booking system project to demonstrate scalable architecture, backend validation, and modern UI design.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
