@@ -4,9 +4,16 @@ import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@heroui/react";
 import { HiOutlineX } from "react-icons/hi";
-
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const BookingModal = ({ room }) => {
+    const router = useRouter();
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
 
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
@@ -14,6 +21,14 @@ const BookingModal = ({ room }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
+
+        if (!user) {
+            toast.error("Please login first");
+            return;
+        }
+
+        console.log(user, "Current User");
+
         e.preventDefault();
 
         setLoading(true);
@@ -21,13 +36,54 @@ const BookingModal = ({ room }) => {
         const formData = new FormData(e.currentTarget);
 
         const bookingData = {
+            userId: user?.id,
+            userName: user?.name,
+            userImage: user?.image,
+
+            roomName: room.roomName,
             roomId: room._id,
             bookingDate: formData.get("bookingDate"),
             startTime: formData.get("startTime"),
             endTime: formData.get("endTime"),
         };
 
-        console.log(bookingData);
+        console.log(bookingData, "Booking Data");
+
+        const start = Number(startTime.split(":")[0]);
+        const end = Number(endTime.split(":")[0]);
+
+        if (end <= start) {
+            toast.error("End time must be after start time");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(bookingData),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.message || "Booking failed");
+                setLoading(false);
+                return;
+            }
+
+            toast.success("Room booked successfully!");
+            setIsOpen(false);
+            router.push("/my-bookings");
+        } catch (error) {
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+
 
     };
 
@@ -59,6 +115,8 @@ const BookingModal = ({ room }) => {
     };
 
     const { totalHours, totalCost } = calculateTotalCost();
+
+
 
     return (
         <>
@@ -187,7 +245,6 @@ const BookingModal = ({ room }) => {
                                                     Select
                                                 </option>
 
-                                                <option value="">Select Time</option>
                                                 <option value="08:00">08:00 AM</option>
                                                 <option value="09:00">09:00 AM</option>
                                                 <option value="10:00">10:00 AM</option>
@@ -219,7 +276,6 @@ const BookingModal = ({ room }) => {
                                                     Select
                                                 </option>
 
-                                                <option value="">Select Time</option>
                                                 <option value="09:00">09:00 AM</option>
                                                 <option value="10:00">10:00 AM</option>
                                                 <option value="11:00">11:00 AM</option>

@@ -28,9 +28,7 @@ const SignUp = () => {
                 password: formData.get("password"),
                 image: formData.get("imageUrl"),
             });
-            console.log(data, error);
             const user = data?.user;
-            console.log(user, "created user");
 
             if (error) {
                 toast.error(error.message);

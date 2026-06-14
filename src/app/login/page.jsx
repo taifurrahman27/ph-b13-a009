@@ -108,21 +108,6 @@ const LoginPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-4 rounded-2xl bg-white/10 p-4 backdrop-blur">
-                                <div className="rounded-xl bg-white/10 p-3">
-                                    <FiShield className="text-2xl" />
-                                </div>
-
-                                <div>
-                                    <h3 className="font-semibold">
-                                        Secure Access
-                                    </h3>
-
-                                    <p className="text-sm text-slate-300">
-                                        Your account and booking information stay protected.
-                                    </p>
-                                </div>
-                            </div>
 
                         </div>
                     </div>

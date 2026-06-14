@@ -40,8 +40,6 @@ const AddRoomForm = () => {
             amenities: formData.getAll("amenities"),
         };
 
-        console.log(room);
-
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`,

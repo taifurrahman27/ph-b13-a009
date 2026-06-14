@@ -34,9 +34,10 @@ import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
     const router = useRouter();
+
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    console.log(user, "Current User");
+
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const publicNavItems = [

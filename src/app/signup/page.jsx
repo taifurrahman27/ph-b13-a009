@@ -77,21 +77,6 @@ const SignUpPage = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-4 rounded-2xl bg-white/10 p-4 backdrop-blur">
-                                <div className="rounded-xl bg-white/10 p-3">
-                                    <FiWifi className="text-2xl" />
-                                </div>
-
-                                <div>
-                                    <h3 className="font-semibold">
-                                        High-Speed Wi-Fi
-                                    </h3>
-
-                                    <p className="text-sm text-slate-300">
-                                        Stay connected with reliable internet for research and online classes.
-                                    </p>
-                                </div>
-                            </div>
 
                             <div className="flex items-center gap-4 rounded-2xl bg-white/10 p-4 backdrop-blur">
                                 <div className="rounded-xl bg-white/10 p-3">

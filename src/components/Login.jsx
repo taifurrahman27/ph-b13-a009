@@ -30,7 +30,6 @@ const Login = () => {
                 password,
             });
 
-            console.log(data, error);
 
             if (error) {
                 toast.error(error.message);
