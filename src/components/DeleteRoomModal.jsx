@@ -35,8 +35,6 @@ export function DeleteRoomModal({ room }) {
             router.push("/rooms");
             router.refresh();
         } catch (error) {
-            console.error("Delete room error:", error);
-
             toast.error(
                 error.message || "Something went wrong"
             );

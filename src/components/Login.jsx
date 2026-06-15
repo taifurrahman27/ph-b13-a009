@@ -42,7 +42,6 @@ const Login = () => {
             router.refresh();
 
         } catch (error) {
-            console.error(error);
             toast.error("Something went wrong");
         } finally {
             setIsLoading(false);
@@ -59,8 +58,6 @@ const Login = () => {
                 callbackURL: "/",
             });
         } catch (error) {
-            console.error(error);
-
             toast.error("Google login failed");
             setGoogleLoading(false);
         }

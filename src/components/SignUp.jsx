@@ -40,7 +40,6 @@ const SignUp = () => {
             router.push("/");
             router.refresh();
         } catch (error) {
-            console.error(error);
             toast.error("Something went wrong");
         } finally {
             setIsLoading(false);
@@ -56,7 +55,6 @@ const SignUp = () => {
                 callbackURL: "/",
             });
         } catch (error) {
-            console.error(error);
             toast.error("Google sign up failed");
             setGoogleLoading(false);
         }

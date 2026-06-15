@@ -6,14 +6,11 @@ import { Button } from "@heroui/react";
 import { HiOutlineX } from "react-icons/hi";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const BookingModal = ({ room }) => {
-    const router = useRouter();
 
     const { data: session } = authClient.useSession();
     const user = session?.user;
-
 
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
@@ -21,15 +18,25 @@ const BookingModal = ({ room }) => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
 
         if (!user) {
             toast.error("Please login first");
             return;
         }
 
-        console.log(user, "Current User");
+        if (!startTime || !endTime) {
+            toast.error("Please select time");
+            return;
+        }
 
-        e.preventDefault();
+        const start = Number(startTime.split(":")[0]);
+        const end = Number(endTime.split(":")[0]);
+
+        if (end <= start) {
+            toast.error("End time must be after start time");
+            return;
+        }
 
         setLoading(true);
 
@@ -41,82 +48,64 @@ const BookingModal = ({ room }) => {
             userImage: user?.image,
 
             roomName: room.roomName,
+            roomImage: room.image,
             roomId: room._id,
+
             bookingDate: formData.get("bookingDate"),
-            startTime: formData.get("startTime"),
-            endTime: formData.get("endTime"),
+            startTime,
+            endTime,
         };
 
-        console.log(bookingData, "Booking Data");
-
-        const start = Number(startTime.split(":")[0]);
-        const end = Number(endTime.split(":")[0]);
-
-        if (end <= start) {
-            toast.error("End time must be after start time");
-            setLoading(false);
-            return;
-        }
-
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(bookingData),
-            });
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(bookingData),
+                }
+            );
 
             const data = await res.json();
 
             if (!res.ok) {
                 toast.error(data.message || "Booking failed");
-                setLoading(false);
                 return;
             }
 
             toast.success("Room booked successfully!");
+
+            setStartTime("");
+            setEndTime("");
             setIsOpen(false);
-            router.push("/my-bookings");
+
         } catch (error) {
             toast.error("Something went wrong");
         } finally {
             setLoading(false);
         }
-
-
     };
 
+    // ✅ COST CALCULATION (RESTORED)
     const calculateTotalCost = () => {
         if (!startTime || !endTime) {
-            return {
-                totalHours: 0,
-                totalCost: 0,
-            };
+            return { totalHours: 0, totalCost: 0 };
         }
 
         const start = parseInt(startTime.split(":")[0]);
         const end = parseInt(endTime.split(":")[0]);
 
         if (end <= start) {
-            return {
-                totalHours: 0,
-                totalCost: 0,
-            };
+            return { totalHours: 0, totalCost: 0 };
         }
 
         const totalHours = end - start;
         const totalCost = totalHours * room.hourlyRate;
 
-        return {
-            totalHours,
-            totalCost,
-        };
+        return { totalHours, totalCost };
     };
 
     const { totalHours, totalCost } = calculateTotalCost();
-
-
 
     return (
         <>
@@ -144,7 +133,6 @@ const BookingModal = ({ room }) => {
                             <h2 className="text-3xl font-bold">
                                 Reserve Your Study Room
                             </h2>
-
                             <p className="mt-2 text-indigo-100">
                                 Complete your booking details below.
                             </p>
@@ -153,7 +141,6 @@ const BookingModal = ({ room }) => {
                         <div className="grid lg:grid-cols-2">
 
                             <div className="bg-slate-50 p-6">
-
                                 <Image
                                     src={room.image}
                                     alt={room.roomName}
@@ -170,49 +157,12 @@ const BookingModal = ({ room }) => {
                                     <p className="mt-3 text-slate-600">
                                         {room.description}
                                     </p>
-
-                                    <div className="mt-6 space-y-3">
-
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-500">
-                                                Floor
-                                            </span>
-
-                                            <span className="font-semibold">
-                                                {room.floor}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-500">
-                                                Capacity
-                                            </span>
-
-                                            <span className="font-semibold">
-                                                {room.seatCapacity} People
-                                            </span>
-                                        </div>
-
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-500">
-                                                Hourly Rate
-                                            </span>
-
-                                            <span className="font-bold text-indigo-600">
-                                                ${room.hourlyRate}/hr
-                                            </span>
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
 
                             <div className="p-6 lg:p-8">
 
-                                <form
-                                    onSubmit={handleSubmit}
-                                    className="space-y-5"
-                                >
+                                <form onSubmit={handleSubmit} className="space-y-5">
 
                                     <div>
                                         <label className="mb-2 block font-medium">
@@ -233,7 +183,6 @@ const BookingModal = ({ room }) => {
                                             <label className="mb-2 block font-medium">
                                                 Start Time
                                             </label>
-
                                             <select
                                                 required
                                                 name="startTime"
@@ -241,10 +190,7 @@ const BookingModal = ({ room }) => {
                                                 onChange={(e) => setStartTime(e.target.value)}
                                                 className="w-full rounded-xl border px-4 py-3 outline-none focus:border-indigo-500"
                                             >
-                                                <option value="">
-                                                    Select
-                                                </option>
-
+                                                <option value="">Select</option>
                                                 <option value="08:00">08:00 AM</option>
                                                 <option value="09:00">09:00 AM</option>
                                                 <option value="10:00">10:00 AM</option>
@@ -264,7 +210,6 @@ const BookingModal = ({ room }) => {
                                             <label className="mb-2 block font-medium">
                                                 End Time
                                             </label>
-
                                             <select
                                                 required
                                                 name="endTime"
@@ -272,10 +217,7 @@ const BookingModal = ({ room }) => {
                                                 onChange={(e) => setEndTime(e.target.value)}
                                                 className="w-full rounded-xl border px-4 py-3 outline-none focus:border-indigo-500"
                                             >
-                                                <option value="">
-                                                    Select
-                                                </option>
-
+                                                <option value="">Select</option>
                                                 <option value="09:00">09:00 AM</option>
                                                 <option value="10:00">10:00 AM</option>
                                                 <option value="11:00">11:00 AM</option>
@@ -290,9 +232,9 @@ const BookingModal = ({ room }) => {
                                                 <option value="20:00">08:00 PM</option>
                                             </select>
                                         </div>
-
                                     </div>
 
+                                    {/* ✅ RESTORED BOOKING SUMMARY */}
                                     <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-5">
                                         <h4 className="font-semibold text-slate-900">
                                             Booking Summary
@@ -304,7 +246,6 @@ const BookingModal = ({ room }) => {
                                                 <span className="text-slate-600">
                                                     Hourly Rate
                                                 </span>
-
                                                 <span className="font-medium">
                                                     ${room.hourlyRate}/hr
                                                 </span>
@@ -314,7 +255,6 @@ const BookingModal = ({ room }) => {
                                                 <span className="text-slate-600">
                                                     Total Hours
                                                 </span>
-
                                                 <span className="font-medium">
                                                     {totalHours} hour{totalHours !== 1 ? "s" : ""}
                                                 </span>
@@ -324,7 +264,6 @@ const BookingModal = ({ room }) => {
                                                 <span className="font-semibold text-slate-900">
                                                     Total Cost
                                                 </span>
-
                                                 <span className="text-xl font-bold text-indigo-600">
                                                     ${totalCost}
                                                 </span>
@@ -337,7 +276,6 @@ const BookingModal = ({ room }) => {
 
                                         <Button
                                             type="button"
-                                            variant="outline"
                                             className="flex-1"
                                             onPress={() => setIsOpen(false)}
                                         >
@@ -349,9 +287,7 @@ const BookingModal = ({ room }) => {
                                             isDisabled={loading}
                                             className="flex-1 bg-indigo-600 text-white hover:bg-indigo-700"
                                         >
-                                            {loading
-                                                ? "Booking..."
-                                                : "Confirm Booking"}
+                                            {loading ? "Booking..." : "Confirm Booking"}
                                         </Button>
 
                                     </div>
