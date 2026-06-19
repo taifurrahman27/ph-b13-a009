@@ -75,7 +75,7 @@ const MyBookingsPage = async () => {
 
             <div className="mt-10">
                 {bookings.length === 0 ? (
-                    <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 py-20 text-center">
+                    <div className="border border-dashed border-slate-300 bg-slate-50 py-20 text-center">
                         <div className="mx-auto max-w-md">
                             <div className="mb-6 text-7xl">
                                 📖
@@ -94,20 +94,8 @@ const MyBookingsPage = async () => {
                     </div>
                 ) : (
                     <>
-                        <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <div>
-                                <h2 className="text-2xl font-bold text-slate-900">
-                                    Your Reservations
-                                </h2>
 
-                                <p className="text-slate-500">
-                                    Showing {bookings.length} booking
-                                    {bookings.length > 1 ? "s" : ""}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+                        <div className="grid gap-8  xl:grid-cols-2">
                             {bookings.map((booking) => (
                                 <MyBookingsCard
                                     key={booking._id}

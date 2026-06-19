@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { Button } from "@heroui/react";
 import BookingModal from "./BookingModal";
+import { authClient } from "@/lib/auth-client";
 
 const BookingSection = ({ room }) => {
 
-    const user = true;
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     if (!user) {
         return (
             <div className="mt-10">
@@ -22,7 +25,6 @@ const BookingSection = ({ room }) => {
             </div>
         );
     }
-
     return (
         <div className="mt-10">
 

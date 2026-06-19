@@ -86,7 +86,6 @@ const BookingModal = ({ room }) => {
         }
     };
 
-    // ✅ COST CALCULATION (RESTORED)
     const calculateTotalCost = () => {
         if (!startTime || !endTime) {
             return { totalHours: 0, totalCost: 0 };
@@ -234,7 +233,6 @@ const BookingModal = ({ room }) => {
                                         </div>
                                     </div>
 
-                                    {/* ✅ RESTORED BOOKING SUMMARY */}
                                     <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-5">
                                         <h4 className="font-semibold text-slate-900">
                                             Booking Summary

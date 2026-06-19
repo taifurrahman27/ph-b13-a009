@@ -19,7 +19,6 @@ const MyBookingsCard = ({ booking }) => {
 
     const handleCancel = async () => {
         try {
-            setLoading(true);
 
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${_id}/cancel`,
@@ -31,107 +30,116 @@ const MyBookingsCard = ({ booking }) => {
             if (!res.ok) throw new Error(data.message);
 
             toast.success("Booking cancelled");
-            setOpen(false);
             router.refresh();
         } catch (err) {
             toast.error(err.message || "Failed to cancel booking");
-        } finally {
-            setLoading(false);
         }
     };
 
     return (
         <>
-            <div className="overflow-hidden rounded-3xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+            <div className="overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg md:flex">
 
-                <div className="grid md:grid-cols-3">
+                <div className="relative h-56 w-full md:h-auto md:w-1/3">
+                    <Image
+                        src={roomImage}
+                        alt={roomName}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
 
-                    <div className="relative h-56 md:h-full">
-                        <Image
-                            src={roomImage}
-                            alt={roomName}
-                            fill
-                            className="object-cover"
-                        />
+                <div className="flex flex-1 flex-col justify-between p-6">
+
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <h2 className="text-xl font-bold text-slate-900 md:text-2xl">
+                                {roomName}
+                            </h2>
+
+                            <p className="mt-1 text-sm text-slate-500">
+                                Booking Date: {bookingDate}
+                            </p>
+                        </div>
+
+                        <span
+                            className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold capitalize animate-status-glow ${status === "confirmed"
+                                ? "bg-green-100 text-green-700 shadow-[0_0_14px_rgba(34,197,94,0.55)]"
+                                : "bg-red-100 text-red-700 shadow-[0_0_14px_rgba(239,68,68,0.55)]"
+                                }`}
+                        >
+                            {status}
+                        </span>
                     </div>
 
-                    <div className="md:col-span-2 p-6">
-
-                        <div className="flex items-start justify-between gap-3">
-                            <div>
-                                <h2 className="text-2xl font-bold text-slate-900">
-                                    {roomName}
-                                </h2>
-
-                                <p className="text-sm text-slate-500 mt-1">
-                                    Booking Date: {bookingDate}
-                                </p>
-                            </div>
-
-                            <span
-                                className={`px-3 py-1 rounded-full text-xs font-semibold ${status === "confirmed"
-                                    ? "bg-green-100 text-green-700"
-                                    : "bg-red-100 text-red-700"
-                                    }`}
-                            >
-                                {status}
-                            </span>
+                    <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p className="text-slate-500">Time</p>
+                            <p className="font-semibold">
+                                {startTime} - {endTime}
+                            </p>
                         </div>
 
-                        <div className="mt-6 grid sm:grid-cols-2 gap-4 text-sm">
-
-                            <div>
-                                <p className="text-slate-500">Time</p>
-                                <p className="font-semibold">
-                                    {startTime} - {endTime}
-                                </p>
-                            </div>
-
-                            <div>
-                                <p className="text-slate-500">Total Cost</p>
-                                <p className="font-bold text-indigo-600">
-                                    ${totalCost}
-                                </p>
-                            </div>
+                        <div>
+                            <p className="text-slate-500">Total Cost</p>
+                            <p className="text-lg font-bold text-indigo-600">
+                                ${totalCost}
+                            </p>
                         </div>
+                    </div>
 
+                    <div className="mt-6 flex justify-end">
                         <AlertDialog>
-                            <Button>Cancel Booking</Button>
+                            <Button
+                                color="danger"
+                                isDisabled={status === "cancelled"}
+                            >
+                                {status === "cancelled"
+                                    ? "Booking Cancelled"
+                                    : "Cancel Booking"}
+                            </Button>
+
                             <AlertDialog.Backdrop>
                                 <AlertDialog.Container>
                                     <AlertDialog.Dialog className="sm:max-w-100">
+
                                         <AlertDialog.CloseTrigger />
+
                                         <AlertDialog.Header>
                                             <AlertDialog.Icon status="danger" />
-                                            <AlertDialog.Heading>Cancel booking permanently?</AlertDialog.Heading>
+                                            <AlertDialog.Heading>
+                                                Cancel booking permanently?
+                                            </AlertDialog.Heading>
                                         </AlertDialog.Header>
+
                                         <AlertDialog.Body>
                                             <p>
-                                                This will permanently delete <strong>My Awesome Project</strong> and all of its
-                                                data. This action cannot be undone.
+                                                This will cancel your booking for{" "}
+                                                <strong>{roomName}</strong>.
                                             </p>
                                         </AlertDialog.Body>
+
                                         <AlertDialog.Footer>
-                                            <Button slot="close" variant="tertiary">
-                                                Cancel
+                                            <Button variant="tertiary" slot="close">
+                                                Keep Booking
                                             </Button>
-                                            <Button variant="danger" slot="close"
-                                                onClick={handleCancel}
+
+                                            <Button
+                                                variant="danger"
+                                                onPress={handleCancel}
                                             >
                                                 Cancel Booking
                                             </Button>
                                         </AlertDialog.Footer>
+
                                     </AlertDialog.Dialog>
                                 </AlertDialog.Container>
                             </AlertDialog.Backdrop>
                         </AlertDialog>
-
                     </div>
+
                 </div>
             </div>
-
-
-
         </>
     );
 };

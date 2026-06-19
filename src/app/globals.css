@@ -17,3 +17,21 @@
 .animate-float {
     animation: float 3s ease-in-out infinite;
 }
+
+@keyframes statusGlow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.04);
+        opacity: 0.9;
+    }
+}
+
+.animate-status-glow {
+    animation: statusGlow 2s ease-in-out infinite;
+}
