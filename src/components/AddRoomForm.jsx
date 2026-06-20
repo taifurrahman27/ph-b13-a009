@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
     FieldError,
     Input,
@@ -40,6 +41,8 @@ const AddRoomForm = () => {
             amenities: formData.getAll("amenities"),
         };
 
+        const { data: tokenData } = await authClient.token();
+
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`,
@@ -47,6 +50,7 @@ const AddRoomForm = () => {
                     method: "POST",
                     headers: {
                         "content-type": "application/json",
+                        authorization: `Bearer ${tokenData?.token}`,
                     },
                     body: JSON.stringify(room),
                 }

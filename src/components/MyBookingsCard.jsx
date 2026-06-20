@@ -4,6 +4,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { AlertDialog, Button } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
 const MyBookingsCard = ({ booking }) => {
     const router = useRouter();
     const {
@@ -18,11 +19,15 @@ const MyBookingsCard = ({ booking }) => {
     } = booking;
 
     const handleCancel = async () => {
+
+
         try {
+
+            const { data: tokenData } = await authClient.token();
 
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${_id}/cancel`,
-                { method: "PATCH" }
+                { method: "PATCH", headers: { authorization: `Bearer ${tokenData?.token}` } }
             );
 
             const data = await res.json();

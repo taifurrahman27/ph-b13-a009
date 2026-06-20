@@ -56,12 +56,16 @@ const BookingModal = ({ room }) => {
             endTime,
         };
 
+
+        const { data: tokenData } = await authClient.token();
+        console.log("Token Data:", tokenData);
+
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", authorization: `Bearer ${tokenData?.token}` },
                     body: JSON.stringify(bookingData),
                 }
             );

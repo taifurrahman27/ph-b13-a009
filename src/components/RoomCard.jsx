@@ -32,7 +32,6 @@ const RoomCard = ({ room }) => {
     return (
         <div className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
 
-            {/* Image */}
             <div className="relative h-56 w-full overflow-hidden">
                 <Image
                     src={image}
@@ -42,20 +41,16 @@ const RoomCard = ({ room }) => {
                 />
             </div>
 
-            {/* Content */}
             <div className="flex flex-1 flex-col p-6">
 
-                {/* Room Name */}
                 <h3 className="text-xl font-bold text-slate-900">
                     {roomName}
                 </h3>
 
-                {/* Description */}
                 <p className="mt-3 text-sm leading-6 text-slate-500 flex-1">
                     {shortDescription}
                 </p>
 
-                {/* Info */}
                 <div className="mt-5 space-y-3">
 
                     <div className="flex items-center gap-2 text-sm text-slate-600">
@@ -82,7 +77,6 @@ const RoomCard = ({ room }) => {
                     </div>
                 </div>
 
-                {/* Amenities */}
                 <div className="mt-5 flex flex-wrap gap-2">
 
                     {visibleAmenities.map((amenity) => (
@@ -102,7 +96,6 @@ const RoomCard = ({ room }) => {
 
                 </div>
 
-                {/* Button */}
                 <div className="mt-6">
 
                     <Link href={`/rooms/${_id}`}>
