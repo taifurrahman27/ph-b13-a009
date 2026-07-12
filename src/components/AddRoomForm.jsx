@@ -24,6 +24,10 @@ const amenitiesOptions = [
 ];
 
 const AddRoomForm = () => {
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
     const router = useRouter();
 
     const onSubmit = async (e) => {
@@ -32,6 +36,9 @@ const AddRoomForm = () => {
         const formData = new FormData(e.currentTarget);
 
         const room = {
+            userId: user?.id,
+            userName: user?.name,
+            userImage: user?.image,
             roomName: formData.get("roomName"),
             description: formData.get("description"),
             image: formData.get("image"),

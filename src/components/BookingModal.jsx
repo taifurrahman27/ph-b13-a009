@@ -58,7 +58,6 @@ const BookingModal = ({ room }) => {
 
 
         const { data: tokenData } = await authClient.token();
-        console.log("Token Data:", tokenData);
 
         try {
             const res = await fetch(

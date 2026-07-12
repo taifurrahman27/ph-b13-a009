@@ -16,7 +16,6 @@ export function DeleteRoomModal({ room }) {
         setIsDeleting(true);
 
         const { data: tokenData } = await authClient.token();
-        console.log("Token Data:", tokenData);
 
 
         try {

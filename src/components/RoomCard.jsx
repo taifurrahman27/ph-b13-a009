@@ -9,6 +9,7 @@ import {
 } from "@gravity-ui/icons";
 
 const RoomCard = ({ room }) => {
+    console.log(room);
     const {
         _id,
         roomName,
@@ -36,7 +37,8 @@ const RoomCard = ({ room }) => {
                 <Image
                     src={image}
                     alt={roomName}
-                    fill
+                    height={200}
+                    width={400}
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
             </div>

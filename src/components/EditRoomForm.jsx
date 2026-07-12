@@ -15,6 +15,7 @@ const amenitiesOptions = [
 ];
 
 const EditRoomForm = ({ room }) => {
+    console.log(room);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 

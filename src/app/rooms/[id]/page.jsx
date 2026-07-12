@@ -1,7 +1,6 @@
 import BookingSection from "@/components/BookingSection";
 import { DeleteRoomModal } from "@/components/DeleteRoomModal";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+
 import Image from "next/image";
 import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
@@ -9,15 +8,10 @@ import { BiEdit } from "react-icons/bi";
 const RoomDetailsPage = async ({ params }) => {
     const { id } = await params;
 
-    const { token } = await auth.api.getToken({
-        headers: await headers()
-    })
-    console.log("Token:", token);
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
-        headers: {
-            authorization: `Bearer ${token}`
-        }
+
     }
     );
 

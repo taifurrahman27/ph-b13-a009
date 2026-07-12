@@ -35,7 +35,8 @@ const MyBookingsCard = ({ booking }) => {
             if (!res.ok) throw new Error(data.message);
 
             toast.success("Booking cancelled");
-            router.refresh();
+            router.push("/my-bookings");
+
         } catch (err) {
             toast.error(err.message || "Failed to cancel booking");
         }
@@ -132,6 +133,7 @@ const MyBookingsCard = ({ booking }) => {
                                             <Button
                                                 variant="danger"
                                                 onPress={handleCancel}
+                                                slot="close"
                                             >
                                                 Cancel Booking
                                             </Button>
