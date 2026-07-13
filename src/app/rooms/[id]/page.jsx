@@ -1,25 +1,40 @@
 import BookingSection from "@/components/BookingSection";
-import { DeleteRoomModal } from "@/components/DeleteRoomModal";
 import OwnerControl from "@/components/OwnerControl";
-
 import Image from "next/image";
-import Link from "next/link";
-import { BiEdit } from "react-icons/bi";
-
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 const RoomDetailsPage = async ({ params }) => {
-
     const { id } = await params;
 
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`, {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
+    if (!session) {
+        return <h2 className="text-center py-20">Unauthorized</h2>;
     }
+
+    const token = await auth.api.getToken({
+        headers: await headers(),
+    });
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`,
+        {
+            headers: {
+                authorization: `Bearer ${token.token}`,
+            },
+            cache: "no-store",
+        }
     );
+
+    if (!res.ok) {
+        throw new Error("Failed to load room");
+    }
 
     const room = await res.json();
 
     const {
-        userId,
         roomName,
         image,
         description,
@@ -29,29 +44,12 @@ const RoomDetailsPage = async ({ params }) => {
         amenities = [],
     } = room;
 
-    const ownerId = room.userId;
     return (
         <section className="container mx-auto px-4 py-10">
-
-            <OwnerControl ownerId={ownerId} room={room} />
-
-
-            {/* <div className="flex items-center justify-end gap-2 border-b pt-4 my-4">
-
-                <DeleteRoomModal room={room}></DeleteRoomModal>
-
-                <Link
-                    href={`/rooms/${room._id}/edit`}
-                    className="inline-flex font-bold px-5 py-2 shadow-md items-center gap-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition"
-                ><BiEdit />
-                    Edit
-                </Link>
-            </div> */}
+            <OwnerControl ownerId={room.userId} room={room} />
 
             <div className="grid gap-10 lg:grid-cols-2">
-
                 <div>
-
                     <Image
                         src={image}
                         alt={roomName}
@@ -62,17 +60,13 @@ const RoomDetailsPage = async ({ params }) => {
                 </div>
 
                 <div>
-
-                    <h1 className="text-4xl font-bold">
-                        {roomName}
-                    </h1>
+                    <h1 className="text-4xl font-bold">{roomName}</h1>
 
                     <p className="mt-4 text-slate-600">
                         {description}
                     </p>
 
                     <div className="mt-8 space-y-4">
-
                         <div>
                             Floor:
                             <span className="ml-2 font-semibold">
@@ -93,14 +87,10 @@ const RoomDetailsPage = async ({ params }) => {
                                 ${hourlyRate}/hr
                             </span>
                         </div>
-
-
-
                     </div>
 
                     <div className="mt-8 flex flex-wrap gap-3">
-
-                        {amenities?.map((item) => (
+                        {amenities.map((item) => (
                             <span
                                 key={item}
                                 className="rounded-full bg-indigo-50 px-4 py-2 text-sm text-indigo-700"
@@ -108,15 +98,11 @@ const RoomDetailsPage = async ({ params }) => {
                                 {item}
                             </span>
                         ))}
-
                     </div>
 
                     <BookingSection room={room} />
-
                 </div>
-
             </div>
-
         </section>
     );
 };
