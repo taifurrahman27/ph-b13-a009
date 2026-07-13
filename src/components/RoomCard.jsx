@@ -9,7 +9,6 @@ import {
 } from "@gravity-ui/icons";
 
 const RoomCard = ({ room }) => {
-    console.log(room);
     const {
         _id,
         roomName,
