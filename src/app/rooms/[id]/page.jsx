@@ -3,6 +3,7 @@ import OwnerControl from "@/components/OwnerControl";
 import Image from "next/image";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+import { notFound } from "next/navigation";
 
 export const metadata = {
     title: "Study Room Details",
@@ -34,7 +35,7 @@ const RoomDetailsPage = async ({ params }) => {
     );
 
     if (!res.ok) {
-        throw new Error("Failed to load room");
+        notFound();
     }
 
     const room = await res.json();

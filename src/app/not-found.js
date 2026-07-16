@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Home, BookOpen, TriangleAlert } from "lucide-react";
 
 export const metadata = {
-    title: "StudyNook - Not found",
+    title: "Not found",
 };
 
 const NotFoundPage = () => {
