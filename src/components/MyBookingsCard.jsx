@@ -25,9 +25,10 @@ const MyBookingsCard = ({ booking }) => {
 
             const { data: tokenData } = await authClient.token();
 
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${_id}/cancel`,
-                { method: "PATCH", headers: { authorization: `Bearer ${tokenData?.token}` } }
+                { method: "PATCH", headers: { Authorization: `Bearer ${tokenData?.token}` } }
             );
 
             const data = await res.json();

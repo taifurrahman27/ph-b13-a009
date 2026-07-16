@@ -5,10 +5,13 @@ import {
     FiClock,
     FiBookmark,
     FiTrendingUp,
-    FiShield,
     FiCoffee,
     FiLogIn,
 } from "react-icons/fi";
+
+export const metadata = {
+    title: "Login",
+};
 
 const LoginPage = () => {
     return (

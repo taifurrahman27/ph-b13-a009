@@ -1,5 +1,9 @@
 import MyListings from "@/components/MyListings";
 
+export const metadata = {
+    title: "My Listings",
+};
+
 const MyListingsPage = () => {
     return (
         <section className="min-h-screen bg-slate-50 py-8">

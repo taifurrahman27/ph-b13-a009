@@ -8,6 +8,10 @@ import {
     FaCheckCircle,
 } from "react-icons/fa";
 
+export const metadata = {
+    title: "About Us",
+};
+
 const AboutPage = () => {
     return (
         <section className="bg-slate-50">

@@ -4,11 +4,14 @@ import Link from "next/link";
 import {
     FiUsers,
     FiClock,
-    FiWifi,
     FiCoffee,
     FiBookOpen,
     FiShield,
 } from "react-icons/fi";
+
+export const metadata = {
+    title: "Sign Up",
+};
 
 const SignUpPage = () => {
     return (

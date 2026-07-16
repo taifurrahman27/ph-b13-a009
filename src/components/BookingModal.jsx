@@ -59,18 +59,18 @@ const BookingModal = ({ room }) => {
 
         const { data: tokenData } = await authClient.token();
 
+
         try {
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", authorization: `Bearer ${tokenData?.token}` },
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${tokenData?.token}` },
                     body: JSON.stringify(bookingData),
                 }
             );
 
             const data = await res.json();
-
             if (!res.ok) {
                 toast.error(data.message || "Booking failed");
                 return;

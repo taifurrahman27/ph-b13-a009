@@ -1,6 +1,10 @@
 import RoomCard from "@/components/RoomCard";
 import RoomFilter from "@/components/RoomFilter";
 
+export const metadata = {
+    title: "Available Rooms",
+};
+
 const AllRoomsPage = async ({ searchParams }) => {
     const params = await searchParams;
 

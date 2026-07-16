@@ -5,6 +5,10 @@ import {
     HiOutlineClock,
 } from "react-icons/hi";
 
+export const metadata = {
+    title: "Contact Us",
+};
+
 const ContactPage = () => {
     return (
         <section className="bg-slate-50 py-16">

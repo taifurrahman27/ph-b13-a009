@@ -3,6 +3,11 @@ import OwnerControl from "@/components/OwnerControl";
 import Image from "next/image";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
+
+export const metadata = {
+    title: "Study Room Details",
+};
+
 const RoomDetailsPage = async ({ params }) => {
     const { id } = await params;
 
@@ -22,7 +27,7 @@ const RoomDetailsPage = async ({ params }) => {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`,
         {
             headers: {
-                authorization: `Bearer ${token.token}`,
+                Authorization: `Bearer ${token?.token}`,
             },
             cache: "no-store",
         }

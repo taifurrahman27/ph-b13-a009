@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { Home, BookOpen, TriangleAlert } from "lucide-react";
 
+export const metadata = {
+    title: "StudyNook - Not found",
+};
+
 const NotFoundPage = () => {
     return (
         <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-linear-to-br from-indigo-100 via-white to-blue-100 px-6">

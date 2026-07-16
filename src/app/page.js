@@ -6,6 +6,10 @@ import Stats from "@/components/homepage/Stats";
 import WhyLoveUs from "@/components/homepage/WhyLoveUs";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "StudyNook - Home",
+};
+
 export default function Home() {
   return (
     <div>

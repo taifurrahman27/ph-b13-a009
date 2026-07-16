@@ -15,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "StudyNook",
-  description: "Library Study Room Booking",
+  title: {
+    default: "StudyNook",
+    template: "StudyNook – %s",
+  },
+  description:
+    "StudyNook is a study room booking platform where students can discover, book, and manage quiet study spaces.",
 };
 
 export default function RootLayout({ children }) {

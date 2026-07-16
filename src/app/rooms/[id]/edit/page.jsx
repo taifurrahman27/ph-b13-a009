@@ -1,11 +1,24 @@
 import EditRoomForm from "@/components/EditRoomForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+
+export const metadata = {
+    title: "StudyNook - Edit Room",
+};
 
 const EditRoomPage = async ({ params }) => {
     const { id } = await params;
 
+    const token = await auth.api.getToken({
+        headers: await headers(),
+    });
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${id}`,
         {
+            headers: {
+                Authorization: `Bearer ${token?.token}`,
+            },
             cache: "no-store",
         }
     );
